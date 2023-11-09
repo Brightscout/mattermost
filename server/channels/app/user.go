@@ -1232,7 +1232,7 @@ func (a *App) UpdateUser(c request.CTX, user *model.User, sendNotifications bool
 		}
 	} else if user.AuthService == "" && user.AuthData == nil && user.Password != "" && prev.AuthService != "" {
 		// Update the password of the user if the AuthService is set to default.
-		if err := a.IsPasswordValid(user.Password); err != nil {
+		if err := a.IsPasswordValid(c, user.Password); err != nil {
 			return nil, err
 		}
 		

@@ -1220,6 +1220,37 @@ func (a *App) UpdateUser(c request.CTX, user *model.User, sendNotifications bool
 		}
 	}
 
+	updateAt := model.GetMillis()
+	if user.AuthService != "" && user.AuthData != nil {
+		switch user.AuthService {
+		case model.UserAuthServiceSaml:
+			user.AuthService = model.UserAuthServiceSaml
+		case model.UserAuthServiceLdap:
+			user.AuthService = model.UserAuthServiceLdap
+		default:
+			user.AuthService = ""
+		}
+
+		if user.AuthService != "" {
+			user.Password = ""
+			user.LastPasswordUpdate = updateAt
+		} else {
+			user.AuthData = nil
+		}
+	} else if user.AuthService == "" && user.AuthData == nil && prev.Password == "" {
+		if err := a.IsPasswordValid(user.Password); err != nil {
+			return nil, err
+		}
+		
+		newPassword := model.HashPassword(user.Password)
+		if newPassword != prev.Password {
+			user.AuthService = ""
+			user.AuthData = nil
+			user.Password = newPassword
+			user.LastPasswordUpdate = updateAt
+		}
+	}
+
 	userUpdate, err := a.ch.srv.userService.UpdateUser(user, false)
 	if err != nil {
 		var appErr *model.AppError

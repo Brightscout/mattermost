@@ -1223,21 +1223,15 @@ func (a *App) UpdateUser(c request.CTX, user *model.User, sendNotifications bool
 	updateAt := model.GetMillis()
 	if user.AuthService != "" && user.AuthData != nil {
 		switch user.AuthService {
-		case model.UserAuthServiceSaml:
-			user.AuthService = model.UserAuthServiceSaml
-		case model.UserAuthServiceLdap:
-			user.AuthService = model.UserAuthServiceLdap
-		default:
-			user.AuthService = ""
-		}
-
-		if user.AuthService != "" {
+		case model.UserAuthServiceSaml, model.UserAuthServiceLdap:
 			user.Password = ""
 			user.LastPasswordUpdate = updateAt
-		} else {
+		default:
+			user.AuthService = ""
 			user.AuthData = nil
 		}
-	} else if user.AuthService == "" && user.AuthData == nil && prev.Password == "" {
+	} else if user.AuthService == "" && user.AuthData == nil && prev.AuthService != "" {
+		// Update the password of the user if the AuthService is set to default.
 		if err := a.IsPasswordValid(user.Password); err != nil {
 			return nil, err
 		}

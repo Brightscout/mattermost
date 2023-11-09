@@ -1227,10 +1227,10 @@ func (a *App) UpdateUser(c request.CTX, user *model.User, sendNotifications bool
 			user.Password = ""
 			user.LastPasswordUpdate = updateAt
 		default:
-			user.AuthService = ""
-			user.AuthData = nil
+			user.AuthService = prev.AuthService
+			user.AuthData = prev.AuthData
 		}
-	} else if user.AuthService == "" && user.AuthData == nil && prev.AuthService != "" {
+	} else if user.AuthService == "" && user.AuthData == nil && user.Password != "" && prev.AuthService != "" {
 		// Update the password of the user if the AuthService is set to default.
 		if err := a.IsPasswordValid(user.Password); err != nil {
 			return nil, err

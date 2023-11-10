@@ -237,7 +237,6 @@ func (us SqlUserStore) Update(user *model.User, trustedUpdateData bool) (*model.
 		return nil, errors.Wrapf(err, "failed to update User with userId=%s", user.Id)
 	}
 
-
 	count, err := res.RowsAffected()
 	if err != nil {
 		return nil, errors.Wrap(err, "failed to get rows_affected")

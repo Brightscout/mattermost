@@ -15,7 +15,7 @@ import {getUser} from 'mattermost-redux/selectors/entities/users';
 import {openModal} from 'actions/views/modals';
 
 import PersistNotificationConfirmModal from 'components/persist_notification_confirm_modal';
-import PostPriorityPickerOverlay from 'components/post_priority/post_priority_picker_overlay';
+import PostPriorityPicker from 'components/post_priority/post_priority_picker';
 
 import Constants, {ModalIdentifiers} from 'utils/constants';
 import {hasRequestedPersistentNotifications, mentionsMinusSpecialMentionsInText, specialMentionsInText} from 'utils/post_utils';
@@ -148,7 +148,7 @@ const usePriority = (
 
     const additionalControl = useMemo(() =>
         !draft.rootId && isPostPriorityEnabled && (
-            <PostPriorityPickerOverlay
+            <PostPriorityPicker
                 key='post-priority-picker-key'
                 settings={draft.metadata?.priority}
                 onApply={handlePostPriorityApply}

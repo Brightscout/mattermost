@@ -136,6 +136,7 @@ export function SubMenu(props: Props) {
                 menuId,
                 menuAriaLabel,
                 children,
+                subMenuHeader,
             },
         }));
     }
@@ -180,8 +181,7 @@ export function SubMenu(props: Props) {
                         onKeyDown={handleSubMenuKeyDown}
                         autoFocusItem={true}
                         sx={{
-                            paddingTop: 0,
-                            paddingBottom: 0,
+                            py: 0,
                         }}
                     >
                         {children}
@@ -196,6 +196,7 @@ interface SubMenuModalProps {
     menuId: Props['menuId'];
     menuAriaLabel?: Props['menuAriaLabel'];
     children: Props['children'];
+    subMenuHeader?: ReactNode;
 }
 
 function SubMenuModal(props: SubMenuModalProps) {
@@ -221,6 +222,7 @@ function SubMenuModal(props: SubMenuModalProps) {
                     aria-hidden={true}
                     onClick={handleModalClose}
                 >
+                    {props.subMenuHeader}
                     {props.children}
                 </MuiMenuList>
             </GenericModal>

@@ -56,11 +56,11 @@ const MultiSelectOption = React.forwardRef(({
                 </div>
             </div>
             <div className='more-modal__actions'>
-                <div className='more-modal__actions--round'>
+                <button className='more-modal__actions--round'>
                     <i
                         className='icon icon-plus'
                     />
-                </div>
+                </button>
             </div>
         </div>
     );

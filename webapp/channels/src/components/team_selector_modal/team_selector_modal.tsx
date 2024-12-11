@@ -190,9 +190,9 @@ export class TeamSelectorModal extends React.PureComponent<Props, State> {
                     </div>
                 </div>
                 <div className='more-modal__actions'>
-                    <div className='more-modal__actions--round'>
+                    <button className='more-modal__actions--round'>
                         <i className='fa fa-plus'/>
-                    </div>
+                    </button>
                 </div>
             </div>
         );

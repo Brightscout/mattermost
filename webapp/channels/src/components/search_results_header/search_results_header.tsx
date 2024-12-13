@@ -48,6 +48,8 @@ function SearchResultsHeader(props: Props) {
         </>
     );
 
+    const expandOrCollapseSidebarButtonAriaLabel = props.isExpanded ? formatMessage({id: 'rhs_header.collapseSidebarTooltip.icon', defaultMessage: 'Collapse Sidebar Icon'}) : formatMessage({id: 'rhs_header.expandSidebarTooltip.icon', defaultMessage: 'Expand Sidebar Icon'});
+
     return (
         <div className='sidebar--right__header'>
             <span className='sidebar--right__title'>
@@ -73,14 +75,15 @@ function SearchResultsHeader(props: Props) {
                             type='button'
                             className='sidebar--right__expand btn btn-icon btn-sm'
                             onClick={props.actions.toggleRhsExpanded}
+                            aria-label={expandOrCollapseSidebarButtonAriaLabel}
                         >
                             <i
                                 className='icon icon-arrow-expand'
-                                aria-label={formatMessage({id: 'rhs_header.expandSidebarTooltip.icon', defaultMessage: 'Expand Sidebar Icon'})}
+                                aria-hidden='true'
                             />
                             <i
                                 className='icon icon-arrow-collapse'
-                                aria-label={formatMessage({id: 'rhs_header.collapseSidebarTooltip.icon', defaultMessage: 'Collapse Sidebar Icon'})}
+                                aria-hidden='true'
                             />
                         </button>
                     </WithTooltip>

@@ -50,6 +50,7 @@ export default class SuggestionList extends React.PureComponent<Props> {
     currentLabel: string | null;
     currentItem: any;
     maxHeight: number;
+    suggestedResultStatusRef: React.RefObject<HTMLDivElement>;
 
     constructor(props: Props) {
         super(props);
@@ -60,6 +61,7 @@ export default class SuggestionList extends React.PureComponent<Props> {
         this.currentLabel = '';
         this.currentItem = {};
         this.maxHeight = 0;
+        this.suggestedResultStatusRef = React.createRef();
     }
 
     componentDidMount() {
@@ -244,6 +246,7 @@ export default class SuggestionList extends React.PureComponent<Props> {
         }
 
         const clonedItems = cloneDeep(this.props.items);
+        const suggestedResultStatusElement = this.suggestedResultStatusRef.current;
 
         const items = [];
         if (clonedItems.length === 0) {
@@ -251,6 +254,12 @@ export default class SuggestionList extends React.PureComponent<Props> {
                 return null;
             }
             items.push(this.renderNoResults());
+            if (suggestedResultStatusElement) {
+                suggestedResultStatusElement.textContent = 'No result found';
+            }
+        } else if (suggestedResultStatusElement) {
+            suggestedResultStatusElement.textContent =
+                `${this.props.items.length} results available`;
         }
 
         let prevItemType = null;
@@ -310,6 +319,12 @@ export default class SuggestionList extends React.PureComponent<Props> {
                 >
                     {items}
                 </div>
+                <div
+                    ref={this.suggestedResultStatusRef}
+                    aria-live='assertive'
+                    role='status'
+                    className='sr-only'
+                />
             </div>
         );
     }

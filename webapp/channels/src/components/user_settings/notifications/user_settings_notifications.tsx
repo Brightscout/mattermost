@@ -597,7 +597,8 @@ class NotificationsTab extends React.PureComponent<Props, State> {
                             Menu: () => null,
                             MenuList: () => null,
                         }}
-                        aria-labelledby='notificationTriggerCustom'
+                        aria-labelledby='settingTitle'
+                        aria-describedby='extraInfo'
                         onChange={this.handleChangeForCustomKeysWithNotificationInput}
                         value={this.state.customKeysWithNotification}
                         inputValue={this.state.customKeysWithNotificationInputValue}

@@ -105,10 +105,10 @@ const ChannelHeaderTitle = ({
                 <strong
                     id='channelHeaderTitle'
                     className='heading'
-                    aria-labelledby='channelHeaderTitle.bot'
+                    aria-labelledby='channelHeaderTitle_bot'
                 >
                     <span
-                        id='channelHeaderTitle.bot'
+                        id='channelHeaderTitle_bot'
                     >
                         {archivedIcon}
                         {channelTitle}

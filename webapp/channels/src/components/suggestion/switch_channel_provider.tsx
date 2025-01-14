@@ -259,10 +259,10 @@ const SwitchChannelSuggestion = React.forwardRef<HTMLLIElement, Props>((props, r
     const getId = () => {
         if (channel.type === Constants.DM_CHANNEL) {
             if (prefix) {
-                return `${props.id}_${(channel as FakeDirectChannel).userId}`;
+                return `quickSwitchInput_${(channel as FakeDirectChannel).userId}`;
             }
         }
-        return `${props.id}_${channel.id}`;
+        return `quickSwitchInput_${channel.id}`;
     };
 
     return (
@@ -330,7 +330,6 @@ function mapStateToPropsForSwitchChannelSuggestion(state: GlobalState, ownProps:
         collapsedThreads,
         team,
         isPartOfOnlyOneTeam,
-        id: 'quickSwitchInput',
     };
 }
 

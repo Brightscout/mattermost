@@ -207,14 +207,16 @@ export default class GlobalPolicyForm extends React.PureComponent<Props, State> 
                                                 }
                                             }}
                                             onInputChange={(e) => {
-                                                this.setState({messageRetentionInputValue: e.target.value, saveNeeded: true});
-                                                this.props.actions.setNavigationBlocked(true);
+                                                if (typeof e !== 'string') {
+                                                    this.setState({messageRetentionInputValue: e.target.value, saveNeeded: true});
+                                                    this.props.actions.setNavigationBlocked(true);
+                                                }
                                             }}
                                             value={this.state.messageRetentionDropdownValue}
                                             inputValue={this.state.messageRetentionInputValue}
                                             width={90}
                                             exceptionToInput={[FOREVER]}
-                                            disabled={this.isMessageRetentionSetByEnv()}
+                                            isDisabled={this.isMessageRetentionSetByEnv()}
                                             defaultValue={keepForeverOption()}
                                             options={[hoursOption(), daysOption(), yearsOption(), keepForeverOption()]}
                                             legend={messages.channelAndMessageRetention}
@@ -235,14 +237,16 @@ export default class GlobalPolicyForm extends React.PureComponent<Props, State> 
                                                 }
                                             }}
                                             onInputChange={(e) => {
-                                                this.setState({fileRetentionInputValue: e.target.value, saveNeeded: true});
-                                                this.props.actions.setNavigationBlocked(true);
+                                                if (typeof e !== 'string') {
+                                                    this.setState({fileRetentionInputValue: e.target.value, saveNeeded: true});
+                                                    this.props.actions.setNavigationBlocked(true);
+                                                }
                                             }}
                                             value={this.state.fileRetentionDropdownValue}
                                             inputValue={this.state.fileRetentionInputValue}
                                             width={90}
                                             exceptionToInput={[FOREVER]}
-                                            disabled={this.isFileRetentionSetByEnv()}
+                                            isDisabled={this.isFileRetentionSetByEnv()}
                                             defaultValue={keepForeverOption()}
                                             options={[hoursOption(), daysOption(), yearsOption(), keepForeverOption()]}
                                             legend={messages.fileRetention}

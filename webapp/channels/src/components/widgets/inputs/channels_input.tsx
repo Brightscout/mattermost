@@ -7,9 +7,9 @@ import type {ComponentProps, RefObject} from 'react';
 import type {MessageDescriptor} from 'react-intl';
 import {FormattedMessage, defineMessages} from 'react-intl';
 import {components} from 'react-select';
-import type {ValueType, ActionMeta, InputActionMeta} from 'react-select';
-import type {Async} from 'react-select/async';
+import type {ActionMeta, InputActionMeta, SelectInstance, SingleValue, MultiValue, GroupBase, MultiValueRemoveProps} from 'react-select';
 import AsyncSelect from 'react-select/async';
+import type {SelectComponents} from 'react-select/dist/declarations/src/components';
 
 import type {Channel} from '@mattermost/types/channels';
 
@@ -41,6 +41,8 @@ type State<T> = {
     options: T[];
 };
 
+type IsMulti = true;
+
 const messages = defineMessages({
     loading: {
         id: 'widgets.channels_input.loading',
@@ -57,7 +59,7 @@ export default class ChannelsInput<T extends Channel> extends React.PureComponen
         loadingMessage: messages.loading,
         noOptionsMessage: messages.noOptions,
     };
-    private selectRef: RefObject<Async<T> & {handleInputChange: (newValue: string, actionMeta: InputActionMeta | {action: 'custom'}) => string}>;
+    private selectRef: RefObject<SelectInstance<T, IsMulti, GroupBase<T>> & {handleInputChange: (newValue: string, actionMeta: InputActionMeta | {action: 'custom'}) => string}>;
 
     constructor(props: Props<T>) {
         super(props);
@@ -145,13 +147,15 @@ export default class ChannelsInput<T extends Channel> extends React.PureComponen
         }
     };
 
-    MultiValueRemove = ({children, innerProps}: {children: React.ReactNode | React.ReactNode[]; innerProps: Record<string, any>}) => (
-        <div {...innerProps}>
-            {children || <CloseCircleSolidIcon/>}
-        </div>
-    );
+    MultiValueRemove = (props: MultiValueRemoveProps<T, IsMulti, GroupBase<T>>) => {
+        const {innerProps, children} = props;
 
-    components = {
+        return (<div {...innerProps}>
+            {children || <CloseCircleSolidIcon/>}
+        </div>);
+    };
+
+    components: Partial<SelectComponents<T, boolean, GroupBase<T>>> = {
         NoOptionsMessage: this.NoOptionsMessage,
         MultiValueRemove: this.MultiValueRemove,
         IndicatorsContainer: () => null,
@@ -165,7 +169,7 @@ export default class ChannelsInput<T extends Channel> extends React.PureComponen
         return (
             <AsyncSelect
                 ref={this.selectRef}
-                onChange={this.onChange as (value: ValueType<Channel>, _meta: ActionMeta<Channel>) => void}
+                onChange={this.onChange as (newValue: SingleValue<Channel> | MultiValue<Channel>, actionMeta: ActionMeta<Channel>) => void}
 
                 loadOptions={this.optionsLoader}
                 isMulti={true}

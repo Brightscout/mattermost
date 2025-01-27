@@ -5,7 +5,7 @@ import React, {useEffect, useRef} from 'react';
 import {useIntl} from 'react-intl';
 import {useSelector} from 'react-redux';
 import {components} from 'react-select';
-import type {IndicatorProps, OptionProps, SingleValueProps, ValueType, OptionTypeBase} from 'react-select';
+import type {OptionProps, SingleValueProps, OnChangeValue, DropdownIndicatorProps} from 'react-select';
 import AsyncSelect from 'react-select/async';
 
 import {
@@ -210,7 +210,7 @@ const SingleValue = (props: SingleValueProps<ChannelOption>) => {
     );
 };
 
-const DropdownIndicator = (props: IndicatorProps<ChannelOption>) => {
+const DropdownIndicator = (props: DropdownIndicatorProps<ChannelOption>) => {
     return (
         <components.DropdownIndicator {...props}>
             <ChevronDownIcon
@@ -221,8 +221,8 @@ const DropdownIndicator = (props: IndicatorProps<ChannelOption>) => {
     );
 };
 
-type Props<O extends OptionTypeBase> = {
-    onSelect: (channel: ValueType<O>) => void;
+type Props<O> = {
+    onSelect: (channel: OnChangeValue<O, boolean>) => void;
     currentBodyHeight: number;
     value?: O;
     validChannelTypes?: string[];
@@ -296,10 +296,9 @@ function ForwardPostChannelSelect({onSelect, value, currentBodyHeight, validChan
             value={value}
             onChange={onSelect}
             loadOptions={handleInputChange}
-            defaultOptions={defaultOptions.current}
+            defaultOptions={defaultOptions.current as any}
             components={{DropdownIndicator, Option, SingleValue}}
             styles={baseStyles}
-            legend='Forward to'
             placeholder='Select channel or people'
             className='forward-post__select'
             data-testid='forward-post-select'

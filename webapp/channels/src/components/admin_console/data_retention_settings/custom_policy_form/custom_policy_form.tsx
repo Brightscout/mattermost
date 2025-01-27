@@ -401,8 +401,10 @@ export default class CustomPolicyForm extends React.PureComponent<Props, State> 
                                             }
                                         }}
                                         onInputChange={(e) => {
-                                            this.setState({messageRetentionInputValue: e.target.value, saveNeeded: true});
-                                            this.props.actions.setNavigationBlocked(true);
+                                            if (typeof e !== 'string') {
+                                                this.setState({messageRetentionInputValue: e.target.value, saveNeeded: true});
+                                                this.props.actions.setNavigationBlocked(true);
+                                            }
                                         }}
                                         value={this.state.messageRetentionDropdownValue}
                                         inputValue={this.state.messageRetentionInputValue}

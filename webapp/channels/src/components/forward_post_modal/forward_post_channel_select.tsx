@@ -5,7 +5,7 @@ import React, {useEffect, useRef} from 'react';
 import {useIntl} from 'react-intl';
 import {useSelector} from 'react-redux';
 import {components} from 'react-select';
-import type {OptionProps, SingleValueProps, OnChangeValue, DropdownIndicatorProps} from 'react-select';
+import type {OptionProps, SingleValueProps, OnChangeValue, DropdownIndicatorProps, OptionsOrGroups, GroupBase} from 'react-select';
 import AsyncSelect from 'react-select/async';
 
 import {
@@ -44,11 +44,6 @@ export type ChannelOption = {
     label: string;
     value: string;
     details: ChannelTypeFromProvider;
-}
-
-type GroupedOption = {
-    label: React.ReactNode;
-    options: ChannelOption[];
 }
 
 export const makeSelectedChannelOption = (channel: Channel): ChannelOption => ({
@@ -241,7 +236,7 @@ function ForwardPostChannelSelect({onSelect, value, currentBodyHeight, validChan
     const isValidChannelType = (channel: Channel) => validChannelTypes.includes(channel.type) && !channel.delete_at;
 
     const getDefaultResults = () => {
-        let options: GroupedOption[] = [];
+        let options: OptionsOrGroups<ChannelOption, GroupBase<ChannelOption>> = [];
 
         const handleDefaultResults = (res: ProviderResult<any>) => {
             options = [
@@ -259,7 +254,7 @@ function ForwardPostChannelSelect({onSelect, value, currentBodyHeight, validChan
         return options;
     };
 
-    const defaultOptions = useRef<GroupedOption[]>(getDefaultResults());
+    const defaultOptions = useRef<OptionsOrGroups<ChannelOption, GroupBase<ChannelOption>>>(getDefaultResults());
 
     const handleInputChange = (inputValue: string) => {
         return new Promise<ChannelOption[]>((resolve) => {
@@ -296,7 +291,7 @@ function ForwardPostChannelSelect({onSelect, value, currentBodyHeight, validChan
             value={value}
             onChange={onSelect}
             loadOptions={handleInputChange}
-            defaultOptions={defaultOptions.current as any}
+            defaultOptions={defaultOptions.current}
             components={{DropdownIndicator, Option, SingleValue}}
             styles={baseStyles}
             placeholder='Select channel or people'

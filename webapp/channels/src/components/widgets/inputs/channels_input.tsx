@@ -41,8 +41,6 @@ type State<T> = {
     options: T[];
 };
 
-type IsMulti = true;
-
 const messages = defineMessages({
     loading: {
         id: 'widgets.channels_input.loading',
@@ -59,7 +57,7 @@ export default class ChannelsInput<T extends Channel> extends React.PureComponen
         loadingMessage: messages.loading,
         noOptionsMessage: messages.noOptions,
     };
-    private selectRef: RefObject<SelectInstance<T, IsMulti, GroupBase<T>> & {handleInputChange: (newValue: string, actionMeta: InputActionMeta | {action: 'custom'}) => string}>;
+    private selectRef: RefObject<SelectInstance<T, boolean, GroupBase<T>> & {handleInputChange: (newValue: string, actionMeta: InputActionMeta | {action: 'custom'}) => string}>;
 
     constructor(props: Props<T>) {
         super(props);
@@ -147,7 +145,7 @@ export default class ChannelsInput<T extends Channel> extends React.PureComponen
         }
     };
 
-    MultiValueRemove = (props: MultiValueRemoveProps<T, IsMulti, GroupBase<T>>) => {
+    MultiValueRemove = (props: MultiValueRemoveProps<T, boolean, GroupBase<T>>) => {
         const {innerProps, children} = props;
 
         return (<div {...innerProps}>

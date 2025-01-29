@@ -46,8 +46,6 @@ type MultiInputValue = {
     value: string;
 }
 
-type IsMulti = true;
-
 export type OwnProps = {
     user: UserProfile;
     updateSection: (section: string) => void;
@@ -371,7 +369,7 @@ class NotificationsTab extends React.PureComponent<Props, State> {
         this.setState({isCustomKeysWithNotificationInputChecked: checked});
     };
 
-    handleChangeForCustomKeysWithNotificationInput = (values: OnChangeValue<{ value: string }, IsMulti>) => {
+    handleChangeForCustomKeysWithNotificationInput = (values: OnChangeValue<{ value: string }, true>) => {
         if (values && Array.isArray(values) && values.length > 0) {
             // Check the custom keys input checkbox when atleast a single key is entered
             if (this.state.isCustomKeysWithNotificationInputChecked === false) {
@@ -439,7 +437,7 @@ class NotificationsTab extends React.PureComponent<Props, State> {
         }
     };
 
-    handleChangeForCustomKeysWithHighlightInput = (values: OnChangeValue<{ value: string }, IsMulti>) => {
+    handleChangeForCustomKeysWithHighlightInput = (values: OnChangeValue<{ value: string }, true>) => {
         if (values && Array.isArray(values) && values.length > 0) {
             const customKeysWithHighlight = values.
                 map((value: MultiInputValue) => {
@@ -1123,7 +1121,7 @@ class NotificationsTab extends React.PureComponent<Props, State> {
     }
 }
 
-const customKeywordsSelectorStyles: StylesConfig<MultiInputValue, IsMulti> = {
+const customKeywordsSelectorStyles: StylesConfig<MultiInputValue, true> = {
     container: ((baseStyle) => ({
         ...baseStyle,
         marginBlockStart: '10px',

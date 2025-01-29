@@ -73,8 +73,6 @@ type Props<TableType extends TableMandatoryTypes> = {
     table: Table<TableType>;
 };
 
-type IsMulti = false;
-
 /**
  * A wrapper around the react-table component that provides a consistent look and feel for the admin console list tables.
  * It also provides a default pagination component. This table is not meant to be used outside of the admin console since it relies on the admin console styles.
@@ -104,7 +102,7 @@ export function ListTable<TableType extends TableMandatoryTypes>(
 
     const selectedPageSize = pageSizeOptions.find((option) => option.value === props.table.getState().pagination.pageSize) || pageSizeOptions[0];
 
-    function handlePageSizeChange(selectedOption: OnChangeValue<PageSizeOption, IsMulti>) {
+    function handlePageSizeChange(selectedOption: OnChangeValue<PageSizeOption, false>) {
         const {value} = selectedOption as PageSizeOption;
         props.table.setPageSize(Number(value));
     }

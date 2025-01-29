@@ -30,6 +30,7 @@ type Props<T extends ValueType> = Omit<SelectProps<T>, 'onChange'> & {
     required?: boolean;
 };
 
+// `any` to support types compatibility with type definition of `styles` prop
 const baseStyles: StylesConfig<any> = {
     input: (provided) => ({
         ...provided,
@@ -88,7 +89,7 @@ const Option = (props: any) => {
 };
 
 const DropdownInput = <T extends ValueType>(props: Props<T>) => {
-    const {value, placeholder, className, addon, name, textPrefix, legend, onChange, styles, options, error, testId, required, ...otherProps} = props as any;
+    const {value, placeholder, className, addon, name, textPrefix, legend, onChange, styles, options, error, testId, required, ...otherProps} = props as any; // types are not inferred correctly for `props` in latest react-select version.
 
     const [focused, setFocused] = useState(false);
 

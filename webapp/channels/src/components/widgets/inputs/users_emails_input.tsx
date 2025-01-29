@@ -63,8 +63,6 @@ type State = {
     prevValue: string;
 }
 
-type IsMulti = true;
-
 const multipleValuesDelimiter = /[\s,;]+/;
 
 const messages = defineMessages({
@@ -219,7 +217,7 @@ export default class UsersEmailsInput extends React.PureComponent<Props, State> 
         </>
     );
 
-    Input = (props: InputProps<EmailInvite | UserProfile, IsMulti>) => {
+    Input = (props: InputProps<EmailInvite | UserProfile, true>) => {
         const handlePaste = (e: ClipboardEvent) => {
             e.preventDefault();
             const clipboardText = e.clipboardData?.getData('Text') || '';
@@ -262,7 +260,7 @@ export default class UsersEmailsInput extends React.PureComponent<Props, State> 
         );
     };
 
-    MultiValueRemove = (props: MultiValueRemoveProps<EmailInvite | UserProfile, IsMulti>) => {
+    MultiValueRemove = (props: MultiValueRemoveProps<EmailInvite | UserProfile, true>) => {
         const {children, innerProps} = props;
 
         return (<div {...innerProps}>
@@ -270,7 +268,7 @@ export default class UsersEmailsInput extends React.PureComponent<Props, State> 
         </div>);
     };
 
-    components: Partial<SelectComponents<UserProfile | EmailInvite, IsMulti, GroupBase<UserProfile | EmailInvite>>> = {
+    components: Partial<SelectComponents<UserProfile | EmailInvite, true, GroupBase<UserProfile | EmailInvite>>> = {
         NoOptionsMessage: this.props.suppressNoOptionsMessage ? () => null : this.NoOptionsMessage,
         MultiValueRemove: this.MultiValueRemove,
         IndicatorsContainer: () => null,
@@ -479,7 +477,7 @@ export default class UsersEmailsInput extends React.PureComponent<Props, State> 
 
         const Msg: any = components.NoOptionsMessage;
 
-        const styles: StylesConfig<UserProfile | EmailInvite, IsMulti> = {
+        const styles: StylesConfig<UserProfile | EmailInvite, true> = {
             placeholder: (css) => ({
                 ...css,
 

@@ -20,8 +20,6 @@ const TEAMS_PER_PAGE = 50;
 
 type TeamSelectOption = {label: string; value: string}
 
-type IsMulti = true;
-
 export interface Props extends PropsFromRedux {
     option: FilterOption;
     updateValues: (values: FilterValues, optionKey: string) => void;
@@ -57,7 +55,7 @@ function TeamFilterDropdown(props: Props) {
         }
     }
 
-    const searchInList: (term: string, callBack: (options: Options<TeamSelectOption>) => void) => void = async (term: string, callBack: (options: Options<TeamSelectOption>) => void) => {
+    async function searchInList(term: string, callBack: (options: Options<TeamSelectOption>) => void) {
         try {
             const response = await props.searchTeams(term, {page: 0, per_page: TEAMS_PER_PAGE} as PagedTeamSearchOpts);
             if (response && response.data && response.data.teams && response.data.teams.length > 0) {
@@ -74,13 +72,13 @@ function TeamFilterDropdown(props: Props) {
             console.error(error); // eslint-disable-line no-console
             callBack([]);
         }
-    };
+    }
 
     function handleMenuScrolledToBottom() {
         loadListInPageNumber(pageNumber);
     }
 
-    function handleOnChange(value: OnChangeValue<TeamSelectOption, IsMulti>, actionMeta: ActionMeta<TeamSelectOption>) {
+    function handleOnChange(value: OnChangeValue<TeamSelectOption, true>, actionMeta: ActionMeta<TeamSelectOption>) {
         if (!actionMeta.action) {
             return;
         }
@@ -119,7 +117,7 @@ function TeamFilterDropdown(props: Props) {
                 placeholder={formatMessage({id: 'admin.channels.filterBy.team.placeholder', defaultMessage: 'Search and select teams'})}
                 loadingMessage={() => formatMessage({id: 'admin.channels.filterBy.team.loading', defaultMessage: 'Loading teams'})}
                 noOptionsMessage={() => formatMessage({id: 'admin.channels.filterBy.team.noTeams', defaultMessage: 'No teams found'})}
-                loadOptions={searchInList}
+                loadOptions={void searchInList}
                 defaultOptions={list}
                 value={selectedValues}
                 onChange={handleOnChange}

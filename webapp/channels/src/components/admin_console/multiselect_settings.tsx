@@ -26,8 +26,6 @@ interface Props {
     noOptionsMessage?: React.ReactNode;
 }
 
-type IsMulti = true;
-
 const getOptionLabel = ({text}: { text: string}) => text;
 
 const MultiSelectSetting: React.FC<Props> = ({
@@ -43,7 +41,7 @@ const MultiSelectSetting: React.FC<Props> = ({
 }) => {
     const [error, setError] = useState(false);
 
-    const handleChange = useCallback((newValue: OnChangeValue<Option, IsMulti>) => {
+    const handleChange = useCallback((newValue: OnChangeValue<Option, true>) => {
         const updatedValues = newValue ? (newValue as Option[]).map((n) => {
             return n.value;
         }) : [];

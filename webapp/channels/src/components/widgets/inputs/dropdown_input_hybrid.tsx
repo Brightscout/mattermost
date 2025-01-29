@@ -17,7 +17,7 @@ type OptionType = {
     value: string;
 }
 
-type Props<T extends OptionType> = Omit<SelectProps<T>, 'onChange'> & {
+type Props<T extends OptionType> = Omit<SelectProps<T>, 'onChange' | 'onInputChange'> & {
     value: T;
     legend?: string | MessageDescriptor;
     error?: string;

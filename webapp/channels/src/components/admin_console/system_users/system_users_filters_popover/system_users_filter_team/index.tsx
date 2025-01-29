@@ -38,8 +38,6 @@ interface Props {
     onChange: (value: Team['id'], label?: string) => void;
 }
 
-type IsMulti = false;
-
 export function SystemUsersFilterTeam(props: Props) {
     const {formatMessage} = useIntl();
 
@@ -49,7 +47,7 @@ export function SystemUsersFilterTeam(props: Props) {
 
     const [list, setList] = useState<Options<OptionType>>();
     const [pageNumber, setPageNumber] = useState(0);
-    const [value, setValue] = useState<OnChangeValue<OptionType, IsMulti>>(getDefaultSelectedTeam(props.initialValue, props.initialLabel));
+    const [value, setValue] = useState<OnChangeValue<OptionType, false>>(getDefaultSelectedTeam(props.initialValue, props.initialLabel));
 
     async function loadListInPageNumber(page: number) {
         try {
@@ -110,7 +108,7 @@ export function SystemUsersFilterTeam(props: Props) {
         loadListInPageNumber(pageNumber);
     }
 
-    function handleOnChange(value: OnChangeValue<OptionType, IsMulti>) {
+    function handleOnChange(value: OnChangeValue<OptionType, false>) {
         setValue(value);
         props.onChange((value as OptionType).value as string, (value as OptionType).label as string);
     }
@@ -166,7 +164,7 @@ export function SystemUsersFilterTeam(props: Props) {
     );
 }
 
-const styles: Partial<StylesConfig<OptionType, IsMulti>> = {
+const styles: Partial<StylesConfig<OptionType, false>> = {
     input: (provided) => ({
         ...provided,
         color: 'var(--center-channel-color)',
@@ -192,7 +190,7 @@ const styles: Partial<StylesConfig<OptionType, IsMulti>> = {
     }),
 };
 
-const IndicatorsContainer = (props: IndicatorsContainerProps<OptionType, IsMulti>) => {
+const IndicatorsContainer = (props: IndicatorsContainerProps<OptionType, false>) => {
     return (
         <div className='asyncTeamSelectInput__indicatorsContainer'>
             <components.IndicatorsContainer {...props}>
@@ -202,7 +200,7 @@ const IndicatorsContainer = (props: IndicatorsContainerProps<OptionType, IsMulti
     );
 };
 
-const Control = (props: ControlProps<OptionType, IsMulti>) => {
+const Control = (props: ControlProps<OptionType, false>) => {
     return (
         <div className='asyncTeamSelectInput__controlContainer'>
             <components.Control {...props}/>
@@ -210,7 +208,7 @@ const Control = (props: ControlProps<OptionType, IsMulti>) => {
     );
 };
 
-const Option = (props: OptionProps<OptionType, IsMulti>) => {
+const Option = (props: OptionProps<OptionType, false>) => {
     return (
         <div
             className={classNames('asyncTeamSelectInput__option', {

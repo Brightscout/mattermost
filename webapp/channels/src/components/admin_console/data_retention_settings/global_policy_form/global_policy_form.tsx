@@ -207,10 +207,8 @@ export default class GlobalPolicyForm extends React.PureComponent<Props, State> 
                                                 }
                                             }}
                                             onInputChange={(e) => {
-                                                if (typeof e !== 'string') {
-                                                    this.setState({messageRetentionInputValue: e.target.value, saveNeeded: true});
-                                                    this.props.actions.setNavigationBlocked(true);
-                                                }
+                                                this.setState({messageRetentionInputValue: e.target.value, saveNeeded: true});
+                                                this.props.actions.setNavigationBlocked(true);
                                             }}
                                             value={this.state.messageRetentionDropdownValue}
                                             inputValue={this.state.messageRetentionInputValue}
@@ -237,10 +235,8 @@ export default class GlobalPolicyForm extends React.PureComponent<Props, State> 
                                                 }
                                             }}
                                             onInputChange={(e) => {
-                                                if (typeof e !== 'string') {
-                                                    this.setState({fileRetentionInputValue: e.target.value, saveNeeded: true});
-                                                    this.props.actions.setNavigationBlocked(true);
-                                                }
+                                                this.setState({fileRetentionInputValue: e.target.value, saveNeeded: true});
+                                                this.props.actions.setNavigationBlocked(true);
                                             }}
                                             value={this.state.fileRetentionDropdownValue}
                                             inputValue={this.state.fileRetentionInputValue}

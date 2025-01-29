@@ -27,9 +27,7 @@ type Props = {
     description?: string;
 }
 
-type IsMulti = true;
-
-const styles: StylesConfig<SelectTextInputOption, IsMulti> = {
+const styles: StylesConfig<SelectTextInputOption, true> = {
     control: (baseStyles) => ({
         ...baseStyles,
         background: 'var(--center-channel-color-rgb)',

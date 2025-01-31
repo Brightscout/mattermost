@@ -1121,7 +1121,7 @@ class NotificationsTab extends React.PureComponent<Props, State> {
     }
 }
 
-const customKeywordsSelectorStyles: StylesConfig<MultiInputValue, true> = {
+const customKeywordsSelectorStyles = {
     container: ((baseStyle) => ({
         ...baseStyle,
         marginBlockStart: '10px',
@@ -1159,7 +1159,7 @@ const customKeywordsSelectorStyles: StylesConfig<MultiInputValue, true> = {
             color: 'rgba(var(--center-channel-color-rgb), 0.56);',
         },
     })),
-};
+} satisfies StylesConfig<MultiInputValue, true>;
 
 const validNotificationLevels = Object.values(NotificationLevels);
 

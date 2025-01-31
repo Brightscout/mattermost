@@ -39,20 +39,12 @@ export type State = {
     field: AppField;
 }
 
-type CommonProps<T> = {
-    isClearable: boolean;
-    openMenuOnFocus: boolean;
-    classNamePrefix: string;
-    menuPortalTarget: HTMLElement;
-    styles: StylesConfig<T>;
-};
-
-const reactStyles: StylesConfig<AppSelectOption | UserProfile | Channel> = {
+const reactStyles = {
     menuPortal: (provided) => ({
         ...provided,
         zIndex: 9999,
     }),
-};
+} satisfies StylesConfig<AppSelectOption | UserProfile | Channel >;
 
 const commonComponents = {
     MultiValueLabel: (props: { data: { label: string } }) => (
@@ -62,12 +54,12 @@ const commonComponents = {
     ),
 };
 
-const commonProps: CommonProps<AppSelectOption | UserProfile | Channel> = {
+const commonProps = {
     isClearable: true,
     openMenuOnFocus: false,
     classNamePrefix: 'react-select-auto react-select',
     menuPortalTarget: document.body,
-    styles: reactStyles,
+    styles: reactStyles satisfies StylesConfig<AppSelectOption | UserProfile | Channel>,
 };
 
 export default class AppsFormSelectField extends React.PureComponent<Props, State> {
@@ -135,7 +127,7 @@ export default class AppsFormSelectField extends React.PureComponent<Props, Stat
                     onChange={this.onChange as any} // types are not working correctly for multiselect
                     isDisabled={field.readonly}
                     components={commonComponents}
-                    {...commonProps as CommonProps<AppSelectOption>}
+                    {...commonProps}
                 />
             </div>
         );
@@ -158,7 +150,7 @@ export default class AppsFormSelectField extends React.PureComponent<Props, Stat
                     onChange={this.onChange as any} // types are not working correctly for multiselect
                     isDisabled={readonly}
                     components={{...commonComponents, Option: SelectUserOption}}
-                    {...commonProps as CommonProps<UserProfile>}
+                    {...commonProps}
                 />
             </div>
         );
@@ -181,7 +173,7 @@ export default class AppsFormSelectField extends React.PureComponent<Props, Stat
                     onChange={this.onChange as any} // types are not working correctly for multiselect
                     isDisabled={readonly}
                     components={{...commonComponents, Option: SelectChannelOption}}
-                    {...commonProps as CommonProps<Channel>}
+                    {...commonProps}
                 />
             </div>
         );

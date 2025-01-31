@@ -117,7 +117,8 @@ function TeamFilterDropdown(props: Props) {
                 placeholder={formatMessage({id: 'admin.channels.filterBy.team.placeholder', defaultMessage: 'Search and select teams'})}
                 loadingMessage={() => formatMessage({id: 'admin.channels.filterBy.team.loading', defaultMessage: 'Loading teams'})}
                 noOptionsMessage={() => formatMessage({id: 'admin.channels.filterBy.team.noTeams', defaultMessage: 'No teams found'})}
-                loadOptions={void searchInList}
+                // eslint-disable-next-line no-void
+                loadOptions={void searchInList} // disabled eslint rule because of conflict between Promise<void> and void.
                 defaultOptions={list}
                 value={selectedValues}
                 onChange={handleOnChange}

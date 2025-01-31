@@ -196,14 +196,14 @@ export default class ManageTimezones extends React.PureComponent<Props, State> {
             message: 3,
         };
 
-        const reactStyles: StylesConfig<SelectedOption, boolean> = {
+        const reactStyles = {
 
             menuPortal: (provided) => ({
                 ...provided,
                 zIndex: 9999,
             }),
 
-        };
+        } satisfies StylesConfig<SelectedOption, boolean>;
 
         const noTimezonesFromServer = timezones.length === 0;
         const automaticTimezoneInput = (

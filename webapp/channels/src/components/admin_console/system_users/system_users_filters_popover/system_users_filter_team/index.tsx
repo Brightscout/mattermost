@@ -84,7 +84,7 @@ export function SystemUsersFilterTeam(props: Props) {
         }
     }
 
-    const searchInList: (term: string, callBack: (options: Options<{label: string; value: string}>) => void) => void = async (term: string, callBack: (options: Options<{label: string; value: string}>) => void) => {
+    async function searchInList(term: string, callBack: (options: Options<{label: string; value: string}>) => void) {
         try {
             const response = await dispatch(searchTeams(term, {page: 0, per_page: TEAMS_PER_PAGE} as TeamSearchOpts));
             if (response && response.data && response.data.teams && response.data.teams.length > 0) {
@@ -102,7 +102,7 @@ export function SystemUsersFilterTeam(props: Props) {
             console.error(error); // eslint-disable-line no-console
             callBack([]);
         }
-    };
+    }
 
     function handleMenuScrolledToBottom() {
         loadListInPageNumber(pageNumber);
@@ -143,7 +143,8 @@ export function SystemUsersFilterTeam(props: Props) {
                         placeholder={''} // Since we have a default value, we don't need placeholder
                         loadingMessage={() => formatMessage({id: 'admin.channels.filterBy.team.loading', defaultMessage: 'Loading teams'})}
                         noOptionsMessage={() => formatMessage({id: 'admin.channels.filterBy.team.noTeams', defaultMessage: 'No teams found'})}
-                        loadOptions={searchInList}
+                        // eslint-disable-next-line no-void
+                        loadOptions={void searchInList} // disabled eslint rule because of conflict between Promise<void> and void
                         defaultOptions={list}
                         value={value}
                         onChange={handleOnChange}
@@ -164,7 +165,7 @@ export function SystemUsersFilterTeam(props: Props) {
     );
 }
 
-const styles: Partial<StylesConfig<OptionType, false>> = {
+const styles = {
     input: (provided) => ({
         ...provided,
         color: 'var(--center-channel-color)',
@@ -188,7 +189,7 @@ const styles: Partial<StylesConfig<OptionType, false>> = {
         ...provided,
         zIndex: 100,
     }),
-};
+} satisfies Partial<StylesConfig<OptionType, false>>;
 
 const IndicatorsContainer = (props: IndicatorsContainerProps<OptionType, false>) => {
     return (

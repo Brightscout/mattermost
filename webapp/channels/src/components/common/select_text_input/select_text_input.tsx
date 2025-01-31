@@ -27,7 +27,7 @@ type Props = {
     description?: string;
 }
 
-const styles: StylesConfig<SelectTextInputOption, true> = {
+const styles = {
     control: (baseStyles) => ({
         ...baseStyles,
         background: 'var(--center-channel-color-rgb)',
@@ -70,7 +70,7 @@ const styles: StylesConfig<SelectTextInputOption, true> = {
             color: 'white',
         },
     }),
-};
+} satisfies StylesConfig<SelectTextInputOption, true>;
 
 const SelectTextInput = ({placeholder, value, handleNewSelection, onChange, id, isClearable, description}: Props) => {
     const [inputValue, setInputValue] = React.useState('');

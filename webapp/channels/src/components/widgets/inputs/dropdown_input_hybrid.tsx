@@ -35,7 +35,7 @@ type Props<T extends OptionType> = Omit<SelectProps<T>, 'onChange' | 'onInputCha
     inputId?: string;
 };
 
-const baseStyles: StylesConfig<OptionType, boolean> = {
+const baseStyles = {
     input: (provided) => ({
         ...provided,
         color: 'var(--center-channel-color)',
@@ -57,7 +57,7 @@ const baseStyles: StylesConfig<OptionType, boolean> = {
         ...provided,
         zIndex: 99999999,
     }),
-};
+} satisfies StylesConfig<OptionType, boolean>;
 
 const IndicatorsContainer = (props: IndicatorsContainerProps<OptionType>) => (
     <div className='DropdownInput__indicatorsContainer'>
@@ -131,14 +131,14 @@ const DropdownInputHybrid = <T extends OptionType = OptionType>(props: Props<T>)
         }
     }, [focused, inputFocused]);
 
-    const getMenuStyles = (): StylesConfig<OptionType, boolean> =>
+    const getMenuStyles = () =>
         (showInput ? {
             menu: (provided) => ({
                 ...provided,
                 width: containerRef.current ? `${containerRef.current.offsetWidth}px` : '0px',
                 left: inputRef.current ? `-${inputRef.current.offsetWidth}px` : '0px',
             }),
-        } : {});
+        } satisfies StylesConfig<OptionType, boolean> : {});
 
     const onInputBlur = () => setInputFocused(false);
 

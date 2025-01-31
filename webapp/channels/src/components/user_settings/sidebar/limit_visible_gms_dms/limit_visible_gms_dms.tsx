@@ -181,9 +181,9 @@ export default class LimitVisibleGMsDMs extends React.PureComponent<Props, State
     }
 }
 
-const reactStyles: StylesConfig<Limit, boolean> = {
+const reactStyles = {
     menuPortal: (provided) => ({
         ...provided,
         zIndex: 9999,
     }),
-};
+} satisfies StylesConfig<Limit, boolean>;

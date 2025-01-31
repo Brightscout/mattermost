@@ -183,12 +183,13 @@ export class ManageLanguage extends React.PureComponent<Props, State> {
             options.push({value: lang.value, label: lang.name});
         });
 
-        const reactStyles: StylesConfig<SelectedOption, boolean> = {
+        const reactStyles = {
             menuPortal: (provided) => ({
                 ...provided,
                 zIndex: 9999,
             }),
-        };
+        } satisfies StylesConfig<SelectedOption, boolean>;
+
         const interfaceLanguageLabelAria = intl.formatMessage({id: 'user.settings.languages.dropdown.arialabel', defaultMessage: 'Dropdown selector to change the interface language'});
 
         const input = (
